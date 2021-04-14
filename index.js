@@ -9,12 +9,20 @@ const fuelPerMinute = []
 const fuelPerLap = []
 
 function parseFuelPerMinute(line) {
-    const match = line.match(/Fuel use per minute: windowed calc=([\d.]+), max per lap calc=([\d.]+)/i)
+    let match = line.match(/Fuel use per minute \(basic calc\) = ([\d.]+)/i)
     if (match) {
         fuelPerMinute.push({
             windowed: +match[1],
-            max: +match[2],
+            max: "-",
         })
+    } else {
+        match = line.match(/Fuel use per minute: windowed calc=([\d.]+), max per lap calc=([\d.]+)/i)
+        if (match) {
+            fuelPerMinute.push({
+                windowed: +match[1],
+                max: +match[2],
+            })
+        }
     }
 }
 
